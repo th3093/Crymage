@@ -110,10 +110,10 @@ def decrypt_picture(org_path, enc_path):
 
 if __name__ == '__main__':
 
-    __original_path = '../orig.png'
-    __output_path = 'x.png'
-    __message_path = '../message.txt'
-    __encrypted_path = 'x.png'
+    __original_path = '../examples/key_image_1.png'
+    __output_path = '../examples/encrypted_1_preview.png'
+    __message_path = '../examples/message.txt'
+    __encrypted_path = '../examples/encrypted_1_preview.png'
 
     while True:
         try:
@@ -124,7 +124,6 @@ if __name__ == '__main__':
                 break
         except AttributeError:
             pass
-    # File path and image path einlesen hier// noch erledigen
 
     if __choose == 'e':
         encrypt_picture(__message_path, __original_path, __output_path)

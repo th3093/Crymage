@@ -23,14 +23,18 @@ def __encrypt_message(message):
     return __enc
 
 
-# TODO: Formatierung des strings noch vornehmen!!
+# TODO: ATTENTION!:: decryption is not implemented yet
 # decrypt message from nested list of Unicode to string
 # Input:    enc as nested list of integers
 # Output:   dec as string of decrypted message
 def __decrypt_message(enc):
     __dec = ''
-    for block in enc:
-        __dec += ''.join(chr(block[i]+97) for i in range(3))
+    for char in enc:
+        print(char)
+        if char > 70:
+            __dec += chr((255-char)*(-1)+97)
+        else:
+            __dec += chr(char+97)
     return __dec
 
 
@@ -58,14 +62,17 @@ def __change_create(org_img, enc):
 # Input:    org_img as original PIL.Image.Image object as reference
 #           enc_img as encrypted PIL.Image.Image object
 # Output:   enc_list as list of integers
-def __changed_colors(org_img, enc_img):
+def __changed_alpha(org_img, enc_img):
     __enc_list = []
     __diff = ImageChops.difference(org_img, enc_img)
+    print(len(__diff.getdata()))
     for el in __diff.getdata():
-        if el != (0, 0, 0):
-            __enc_list.append(list(el))
+        print(el)
+        if el != (0, 0, 0, 255):
+            __enc_list.append(el[3])
         else:
             break
+
     return __enc_list
 
 
@@ -95,20 +102,21 @@ def decrypt_picture(org_path, enc_path):
     org_path.replace('/', '\\')
     enc_path.replace('/', '\\')
     __org_img = Image.open(org_path)
-    __org_img.convert('RGB')
+    __org_img.convert('RGBA')
+    __org_img.putalpha(0)
     __enc_img = Image.open(enc_path)
-    __enc_img.convert('RGB')
-    __en_li = __changed_colors(__org_img, __enc_img)
+    __enc_img.convert('RGBA')
+    __en_li = __changed_alpha(__org_img, __enc_img)
     __dec_msg = __decrypt_message(__en_li)
     return __dec_msg
 
 
 if __name__ == '__main__':
 
-    __original_path = '../orig.png'
-    __output_path = 'x.png'
-    __message_path = '../message.txt'
-    __encrypted_path = 'x.png'
+    __original_path = '../examples/key_image_1.png'
+    __output_path = '../examples/encrypted_1_preview.png'
+    __message_path = '../examples/message.txt'
+    __encrypted_path = '../examples/encrypted_1_preview.png'
 
     while True:
         try:
@@ -119,7 +127,6 @@ if __name__ == '__main__':
                 break
         except AttributeError:
             pass
-    # File path and image path einlesen hier// noch erledigen
 
     if __choose == 'e':
         encrypt_picture(__message_path, __original_path, __output_path)
