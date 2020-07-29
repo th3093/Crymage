@@ -6,7 +6,7 @@ This is based on a shared image in .png format. Sender and receiver both has the
 Encryption and decryption is based on this key (image). The encryption algorithm is simple, but thought and coded from scratch.
 Only for image handling the python library pillow (PIL) is used. 
 In this early version only RGB channels get modificated, so there is improvement when it comes to dark key images.
-Therefor it is recommended to use brigt ones like the examples.
+Therefor it is recommended to use bright ones like the examples.
 
 ____________________________________
 
@@ -19,4 +19,4 @@ Though encoded image has serious color marks and decoding wasnt that good.
 msg_to_img_decrypt_encrypt_rgba.py was second idea of encoding via alpha channel but lead to several blind spots.
 Decoding isnt implemented at the moment.
 
-run requirements.txt for setup packages ( only pillow) 
+run requirements.txt for setup packages (only pillow) 
